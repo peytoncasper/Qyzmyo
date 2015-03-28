@@ -11,6 +11,10 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         templateUrl: 'about.html',
         controller: 'AboutCtrl'
     })
+    .when('/scoreboard', {
+        templateUrl: 'scoreboard.html',
+        controller: 'ScoreboardCtrl'
+    })
     .otherwise({
         templateUrl: 'home.html',
         controller: 'HomeCtrl'
@@ -159,32 +163,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 
 
             $('#scoreh1').html($scope.score);
-
-
-            $('#showscore_btn').on('click', function () {
-                $('#score').fadeOut();
-                $('#score').hide();
-                scoreboard();
-            });
         }
 
-
-
-
-        /* *************** SCOREBOARD ************** */
-        function scoreboard() {
-            
-            $('#scoreboard').fadeIn();
-            $.ajax({
-                url: 'http://api-flow.att.io/sandbox/asl/augustuskc/in/flow/results',
-                success: function (data) {
-                    $.each(data.values, function (index, value) {
-                        var userData = jQuery.parseJSON(value.value);
-                        $("#scoreboard").append(userData.name + " " + userData.score + " " + value.timestamp);
-                    });
-                }
-            });
-        }
 
         function calculateScore()
         {
@@ -196,6 +176,35 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
             });
         }
     });
+}]);
+
+
+app.controller('ScoreboardCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+	$rootScope.root = {
+		title: 'Scoreboard'
+	};
+
+	$(document).ready(function () {
+		$('#scoreboard').fadeIn();
+        $.ajax({
+            url: 'http://api-flow.att.io/sandbox/asl/augustuskc/in/flow/results',
+            success: function (data) {
+                $.each(data.values, function (index, value) {
+                    var userData = jQuery.parseJSON(value.value);
+                    $("#tablebody").append(
+                    	'<tr><td>' + userData.name + 
+                    	'</td><td>' + userData.score +
+						'</td><td>' + value.timestamp +
+						'</td></tr>'
+                	);
+                });
+
+            	$('#preloader_div').fadeOut(function() {
+            		$('#scoreboard').fadeIn();
+            	});
+            }
+        });
+	});
 }]);
 
 
