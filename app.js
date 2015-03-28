@@ -27,9 +27,11 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
       name: '3 x 3 = ',
       answers: ['3', '6', '9']
     }, {
-      // TODO
+        // TODO
+
     }
   ];
+
 
   $(document).ready(function() {
     // close nav bar if open
@@ -44,7 +46,15 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
       $('#preloader_div').fadeIn();
 
       // TODO
-
+      $('#preloader_div').fadeOut();
+      
+      $(document).on('input', function ()
+      {
+          alert("Hi");
+      });
+      $.each($scope.questions, function (index, value) {
+          $("#main").append(value.name);
+      });
     });
 
     /* *************** MAIN *************** */
