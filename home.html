@@ -1,7 +1,7 @@
 <div class="container">
 
   <!-- ---------------------- PRELOADER -------------------- -->
-  <div id="preloader_div" class="section center">
+  <div id="preloader_div" class="section screen_centered">
     <div class="preloader-wrapper active" id="preloader">
       <div class="spinner-layer spinner-blue">
         <div class="circle-clipper left">
@@ -53,10 +53,10 @@
   <!-- ---------------------- REGISTER -------------------- -->
   <div id="register" class="section">
     <div class="spacer150"></div>
-    <h1 class="header">
+    <h1 class="header centerd">
       App Name Here
     </h1>
-    <div class="row">
+    <div class="row flow-text">
       <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
         <div class="input-field">
           <input type="text" id="input-id" class="validate">
@@ -76,15 +76,33 @@
 
   <!-- ---------------------- MAIN ---------------------- -->
   <div id="main" class="section">
-      <div id="question"></div>
-      <div id="answer1"></div>
-      <div id="answer2"></div>
-      <div id="answer3"></div>
+    <div class="row centered">
+      <h1 id="question" class="header"></h1>
+    </div>
+
+    <div class="row">
+      <div class="col s3 offset-s1 m3 offset-m1 l2 offset-l3">
+        <h3 id="answer1"></h2>
+      </div>
+      <div class="col s3 offset-s1 m3 l2">
+        <h3 id="answer2"></h3>
+      </div>
+      <div class="col s3 offset-s1 m3 l2">
+        <h3 id="answer3"></h3>
+      </div>
+    </div>
   </div>
 
 
   <!-- ---------------------- SCORE --------------------- -->
   <div id="score" class="section">
-    
+    <h1 class="header">
+      Your Score
+    </h1>
+    <h1 class="center" id="scoreh1">
+    </h1>
+      <div class="center">
+        <a href="#/scoreboard" class="waves-effect waves-light btn">Show Scoreboard</a>
+      </div>
   </div>
 </div>
