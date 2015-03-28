@@ -29,8 +29,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
     $scope.questions = [
 		{
 		    name: '3 x 3 = ',
-		    answers: ['3', '6', '9'],
-            answer: 'c',
+		    answers: ['9', '6', '3'],
+            answer: 'a',
 		}, {
 		    // TODO
 		    name: '6 x 6 = ',
@@ -44,13 +44,13 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 		}, {
 		    // TODO
 		    name: '8 x 8 = ',
-		    answers: ['56', '32', '36'],
-            answer: 'a'
+		    answers: ['56', '32', '64'],
+            answer: 'c'
 		}, {
 		    // TODO
 		    name: '9 x 9 = ',
-		    answers: ['25', '32', '81'],
-            answer: 'c'
+		    answers: ['45', '81', '10'],
+            answer: 'b'
 		}
     ];
     $scope.count = 0;
@@ -137,7 +137,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 
 
 
-
+        
         /* *************** SCORE *************** */
         function score() {
             window.onkeyup = function () { };
@@ -162,7 +162,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
             //});
 
 
-            $('#scoreh1').html(parseInt($scope.score));
+            $('#scoreh1').html($scope.score);
         }
 
 
@@ -179,6 +179,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 
                 }
             }
+            $scope.score = parseInt($scope.score);
         }
     });
 }]);
