@@ -51,7 +51,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
     ];
     $scope.count = 0;
     $scope.answers = [];
-    $scope.timeout = 5 * 1000;  // 5 secs per question
+    $scope.base_score = 100;
 
     $(document).ready(function () {
         // close nav bar if open
@@ -222,7 +222,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
                 if($scope.questions[i].answer == $scope.answers[i].answer)
                 {
                     var elapsedTime = Math.abs($scope.answers[i].timestamp - $scope.answers[i - 1].timestamp)/1000.0;
-                    $scope.score += 100.0 /elapsedTime;
+                    $scope.score += $scope.base_score;
+                    $scope.score += $scope.base_score /elapsedTime; // bonus for timing
 
                 }
             }
