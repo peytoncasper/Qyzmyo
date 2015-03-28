@@ -162,18 +162,23 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
             //});
 
 
-            $('#scoreh1').html($scope.score);
+            $('#scoreh1').html(parseInt($scope.score));
         }
 
 
         function calculateScore()
         {
             $scope.score = 0;
-            $.each($scope.answers, function (index, value) {
-                if ($scope.questions[index].answer == $scope.answers[index].answer)
-                    
-                    $scope.score++;
-            });
+            for (var i = 1; i < $scope.answers.length; i++)
+            {
+                var value = $scope.answers[i];
+                if($scope.questions[i].answer == $scope.answers[i].answer)
+                {
+                    var elapsedTime = Math.abs($scope.answers[i].timestamp - $scope.answers[i - 1].timestamp)/1000.0;
+                    $scope.score += 100.0 /elapsedTime;
+
+                }
+            }
         }
     });
 }]);
