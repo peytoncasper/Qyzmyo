@@ -67,13 +67,59 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
         $('#scoreboard').hide();
 
         /* *************** REGISTER *************** */
-        var fadeOutQuestion = function (answer, right) {
+        var reloadQuestion = function (answer, right, newQuestion) {
             console.log(answer + " " + right);
         	// answer is 1, 2, or 3
         	// right is true or falseg
-        }
+        	$('#question').fadeOut();
+        	switch(answer) {
+        		case 'a':
+        			$('#answer2').hide();
+        			$('#answer3').hide();
+        			$('#answer1').addClass((right ? 'green-text' : 'red-text') + ' lighten-1').fadeOut(function() {
+        				if (newQuestion !== undefined) {
+	        				fadeInQuestion(newQuestion);
+        				} else {
+        					$('#main').hide(function() {
+        						score();
+        					});
+        				}
+        			});
+        			break;
+        		case 'b':
+        			$('#answer1').hide();
+        			$('#answer3').hide();
+        			$('#answer2').addClass((right ? 'green-text' : 'red-text') + ' lighten-1').fadeOut(function() {
+        				if (newQuestion !== undefined) {
+	        				fadeInQuestion(newQuestion);
+        				} else {
+        					$('#main').hide(function() {
+        						score();
+        					});
+        				}
+        			});
+        			break;
+        		case 'c':
+        			$('#answer1').hide();
+        			$('#answer2').hide();
+        			$('#answer3').addClass((right ? 'green-text' : 'red-text') + ' lighten-1').fadeOut(function() {
+        				if (newQuestion !== undefined) {
+	        				fadeInQuestion(newQuestion);
+        				} else {
+        					$('#main').hide(function() {
+        						score();
+        					});
+        				}
+        			});
+        			break;
+        	}
+
+        };
 
         var fadeInQuestion = function (questionObj) {
+        	if (questionObj === undefined) {
+        		return;
+        	}
             var question = questionObj.name;
             var answer1 = questionObj.answers[0];
             var answer2 = questionObj.answers[1];
@@ -82,6 +128,10 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
             $('#answer1').html(answer1);
             $('#answer2').html(answer2);
             $('#answer3').html(answer3);
+            $('#question').removeClass('green-text red-text lighten-1');
+            $('#answer1').removeClass('green-text red-text lighten-1');
+            $('#answer2').removeClass('green-text red-text lighten-1');
+            $('#answer3').removeClass('green-text red-text lighten-1');
             $('#question').fadeIn();
             $('#answer1').fadeIn();
             $('#answer2').fadeIn();
@@ -127,12 +177,9 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
                 $scope.count += 1;
 
                     if ($scope.count == $scope.questions.length) {
-                        $('#main').fadeOut();
-                        $('#main').hide();
-                        score();
+                        reloadQuestion($scope.answers[$scope.count - 1].answer, $scope.questions[$scope.count - 1].answer == $scope.answers[$scope.count - 1].answer ? true : false, undefined);
                     } else {
-                        fadeOutQuestion($scope.answers[$scope.count - 1].answer, $scope.questions[$scope.count - 1].answer == $scope.answers[$scope.count - 1].answer ? true : false);
-                        fadeInQuestion($scope.questions[$scope.count]);
+                        reloadQuestion($scope.answers[$scope.count - 1].answer, $scope.questions[$scope.count - 1].answer == $scope.answers[$scope.count - 1].answer ? true : false, $scope.questions[$scope.count]);
                     }
                 }
             };
