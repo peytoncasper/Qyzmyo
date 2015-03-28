@@ -113,15 +113,16 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
                         answer: 'c',
                     });
                 }
+                if ($scope.answers.length > $scope.count) {
+                    $scope.count += 1;
 
-                $scope.count += 1;
-
-                if ($scope.count == $scope.questions.length) {
-                    $('#main').fadeOut();
-                    $('#main').hide();
-                    score();
-                } else {
-                    reloadQuestion($scope.questions[$scope.count]);
+                    if ($scope.count == $scope.questions.length) {
+                        $('#main').fadeOut();
+                        $('#main').hide();
+                        score();
+                    } else {
+                        reloadQuestion($scope.questions[$scope.count]);
+                    }
                 }
             };
         }
@@ -170,6 +171,17 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
         /* *************** SCOREBOARD ************** */
         function scoreboard() {
             $('#scoreboard').fadeIn();
+            $.ajax({
+                url: 'http://api-flow.att.io/sandbox/asl/augustuskc/in/flow/results',
+                success:function(data)
+                {
+                    var results = jQuery.parseJSON(data);
+                    $.each(results.values, function (index, value) {
+                        var userData = jQuery.parseJSON(value.value);
+                        $("#scoreboard").append(userData.name + " " + userData.score + " " + value.timestamp);
+                    });
+                }
+            })
         }
     });
 }]);
