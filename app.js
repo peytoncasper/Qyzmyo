@@ -25,23 +25,28 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
     $scope.questions = [
 		{
 		    name: '3 x 3 = ',
-		    answers: ['3', '6', '9']
+		    answers: ['3', '6', '9'],
+            answer: 'c',
 		}, {
 		    // TODO
 		    name: '6 x 6 = ',
-		    answers: ['25', '32', '36']
+		    answers: ['25', '32', '36'],
+            answer: 'c'
 		}, {
 		    // TODO
 		    name: '7 x 7 = ',
-		    answers: ['25', '32', '36']
+		    answers: ['25', '23', '49'],
+            answer: 'c'
 		}, {
 		    // TODO
 		    name: '8 x 8 = ',
-		    answers: ['25', '32', '36']
+		    answers: ['56', '32', '36'],
+            answer: 'a'
 		}, {
 		    // TODO
 		    name: '9 x 9 = ',
-		    answers: ['25', '32', '36']
+		    answers: ['25', '32', '81'],
+            answer: 'c'
 		}
     ];
     $scope.count = 0;
@@ -102,7 +107,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
                         timestamp: new Date().getTime(),
                         answer: 'a',
                     });
-                } else if (key == 66) {
+                } else if (key == 66) { 
                     $scope.answers.push({
                         timestamp: new Date().getTime(),
                         answer: 'b',
@@ -133,7 +138,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
         function score() {
             window.onkeyup = function () { };
             $('#score').fadeIn();
-
+            calculateScore();
             $.ajax({
                 type: 'POST',
                 url: 'http://api-flow.att.io/sandbox/asl/augustuskc/in/flow/game',
@@ -153,7 +158,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
             //});
 
 
-            $('#scoreh1').html(5);
+            $('#scoreh1').html($scope.score);
 
 
             $('#showscore_btn').on('click', function () {
@@ -168,18 +173,27 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 
         /* *************** SCOREBOARD ************** */
         function scoreboard() {
+            
             $('#scoreboard').fadeIn();
             $.ajax({
                 url: 'http://api-flow.att.io/sandbox/asl/augustuskc/in/flow/results',
-                success:function(data)
-                {
-                    var results = jQuery.parseJSON(data);
-                    $.each(results.values, function (index, value) {
+                success: function (data) {
+                    $.each(data.values, function (index, value) {
                         var userData = jQuery.parseJSON(value.value);
                         $("#scoreboard").append(userData.name + " " + userData.score + " " + value.timestamp);
                     });
                 }
-            })
+            });
+        }
+
+        function calculateScore()
+        {
+            $scope.score = 0;
+            $.each($scope.answers, function (index, value) {
+                if ($scope.questions[index].answer == $scope.answers[index].answer)
+                    
+                    $scope.score++;
+            });
         }
     });
 }]);
