@@ -28,7 +28,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 				answers: ['3', '6', '9']
 		}, {
 				// TODO
-
+		    name: '6 x 6 = ',
+		    answers: ['25', '32', '36']
 		}
 	];
 	$scope.answers = [];
@@ -43,7 +44,8 @@ $(document).ready(function () {
 	$('#score').hide();
 
 	/* *************** REGISTER *************** */
-	var reloadQuestion = function(questionObj) {
+	var reloadQuestion = function (questionObj) {
+	    console.log(questionObj);   
 		console.log('clicked');
 		var question = questionObj.name;
 		var answer1 = questionObj.answers[0];
@@ -76,32 +78,29 @@ $(document).ready(function () {
 		// TODO
 		$('#preloader_div').fadeOut();
 		window.onkeyup = function (e) {
-			var key = e.keyCode ? e.keyCode : e.which;
+		    var key = e.keyCode ? e.keyCode : e.which;
 
+		    console.log($scope.answers);
 			if (key == 65) {
-				alert("hi");
-				$($scope.answers).append({
+			    $scope.answers.push({
 						timestamp: new Date(),
 						answer: 'a',
 				});
-				reloadQuestion($scope.questions[$($.scope.answers).length() - 1]);
+				reloadQuestion($scope.questions[$scope.answers.length]);
 			} else if (key == 66) {
-				$($scope.answers).append({
+			    $scope.answers.push({
 						timestamp: new Date(),
 						answer: 'b',
 				});
-				reloadQuestion($scope.questions[$($.scope.answers).length() - 1]);
+				reloadQuestion($scope.questions[$scope.answers.length]);
 			} else if (key == 67) {
-				$($scope.answers).append({
+				$scope.answers.push({
 						timestamp: new Date(),
 						answer: 'c',
 				});
-				reloadQuestion($scope.questions[$($.scope.answers).length() - 1]);
+				reloadQuestion($scope.questions[$scope.answers.length]);
 			}
 		};
-		$.each($scope.questions, function (index, value) {
-			$("#main").append(value.name);
-		});
 	});
 
 	/* *************** MAIN *************** */
