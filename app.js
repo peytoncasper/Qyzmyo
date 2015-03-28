@@ -51,24 +51,25 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
                 var key = e.keyCode ? e.keyCode : e.which;
 
                 if (key == 65) {
-                    alert("hi");
+                    
                     $($scope.answers).append({
                         timestamp: new Date(),
                         answer: 'a',
                     });
-                    reloadQuestion($scope.questions[$($.scope.answers).length()]);
+                    
+                    reloadQuestion($scope.questions[$($scope.answers).length() -1]);
                 } else if (key == 66) {
                     $($scope.answers).append({
                         timestamp: new Date(),
                         answer: 'b',
                     });
-                    reloadQuestion($scope.questions[$($.scope.answers).length()]);
+                    reloadQuestion($scope.questions[$($scope.answers).length() -1]);
                 } else if (key == 67) {
                     $($scope.answers).append({
                         timestamp: new Date(),
                         answer: 'c',
                     });
-                    reloadQuestion($scope.questions[$($.scope.answers).length()]);
+                    reloadQuestion($scope.questions[$($scope.answers).length() -1]);
                 }
             }
             $.each($scope.questions, function (index, value) {
