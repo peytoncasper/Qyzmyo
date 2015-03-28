@@ -67,7 +67,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
         $('#scoreboard').hide();
 
         /* *************** REGISTER *************** */
-        var fadeOutQuestion = function(answer, right) {
+        var fadeOutQuestion = function (answer, right) {
+            console.log(answer + " " + right);
         	// answer is 1, 2, or 3
         	// right is true or falseg
         }
@@ -122,14 +123,17 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
                         answer: 'c',
                     });
                 }
+                if ($scope.answers.length > $scope.count) {
                 $scope.count += 1;
 
-                if ($scope.count == $scope.questions.length) {
-                    $('#main').fadeOut();
-                    $('#main').hide();
-                    score();
-                } else {
-                    fadeInQuestion($scope.questions[$scope.count]);
+                    if ($scope.count == $scope.questions.length) {
+                        $('#main').fadeOut();
+                        $('#main').hide();
+                        score();
+                    } else {
+                        fadeOutQuestion($scope.answers[$scope.count - 1].answer, $scope.questions[$scope.count - 1].answer == $scope.answers[$scope.count - 1].answer ? true : false);
+                        fadeInQuestion($scope.questions[$scope.count]);
+                    }
                 }
             };
         }
