@@ -194,9 +194,10 @@ app.controller('ScoreboardCtrl', ['$scope', '$rootScope', function($scope, $root
                     $("#tablebody").append(
                     	'<tr><td>' + userData.name + 
                     	'</td><td>' + userData.score +
-						'</td><td>' + value.timestamp +
+						'</td><td>' + new Date(value.timestamp).toLocaleTimeString() + ' <span class="grey-text darken-2">' + new Date(value.timestamp).toLocaleDateString() + '</span>' +
 						'</td></tr>'
                 	);
+                	console.log("date", value.timestamp);
                 });
 
             	$('#preloader_div').fadeOut(function() {
