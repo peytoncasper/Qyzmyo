@@ -53,7 +53,7 @@
   <!-- ---------------------- REGISTER -------------------- -->
   <div id="register" class="section">
     <div class="spacer150"></div>
-    <h1 class="header">
+    <h1 class="header centerd">
       App Name Here
     </h1>
     <div class="row flow-text">
@@ -76,10 +76,21 @@
 
   <!-- ---------------------- MAIN ---------------------- -->
   <div id="main" class="section">
-      <div id="question"></div>
-      <div id="answer1">1</div>
-      <div id="answer2">2</div>
-      <div id="answer3">3</div>
+    <div class="row centered">
+      <h1 id="question" class="header"></h1>
+    </div>
+
+    <div class="row">
+      <div class="col s3 offset-s1 m3 offset-m1 l2 offset-l3">
+        <h3 id="answer1"></h2>
+      </div>
+      <div class="col s3 offset-s1 m3 l2">
+        <h3 id="answer2"></h3>
+      </div>
+      <div class="col s3 offset-s1 m3 l2">
+        <h3 id="answer3"></h3>
+      </div>
+    </div>
   </div>
 
 
@@ -90,7 +101,9 @@
     </h1>
     <h1 class="center" id="scoreh1">
     </h1>
-      <a id="showscore_btn" class="waves-effect waves-light btn centered">Show Scoreboard</a>
+      <div class="center">
+        <a id="showscore_btn" class="waves-effect waves-light btn">Show Scoreboard</a>
+      </div>
   </div>
 
   <!-- ---------------------- SCOREBOARD ------------------- -->
