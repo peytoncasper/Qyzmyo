@@ -28,10 +28,23 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 				answers: ['3', '6', '9']
 		}, {
 				// TODO
-		    name: '6 x 6 = ',
-		    answers: ['25', '32', '36']
+			name: '6 x 6 = ',
+			answers: ['25', '32', '36']
+		}, {
+				// TODO
+			name: '7 x 7 = ',
+			answers: ['25', '32', '36']
+		}, {
+				// TODO
+			name: '8 x 8 = ',
+			answers: ['25', '32', '36']
+		}, {
+				// TODO
+			name: '9 x 9 = ',
+			answers: ['25', '32', '36']
 		}
 	];
+	$scope.count = 0;
 	$scope.answers = [];
 	$scope.timeout = 5 * 1000;  // 5 secs per question
 
@@ -40,81 +53,104 @@ $(document).ready(function () {
 	$('#sidenav-overlay').trigger('click');
 
 	$('#preloader_div').hide();
-	// $('#main').hide();
+	$('#main').hide();
 	$('#score').hide();
+	$('#scoreboard').hide();
 
 	/* *************** REGISTER *************** */
 	var reloadQuestion = function (questionObj) {
-	    console.log(questionObj);   
-		console.log('clicked');
 		var question = questionObj.name;
 		var answer1 = questionObj.answers[0];
 		var answer2 = questionObj.answers[1];
 		var answer3 = questionObj.answers[2];
-		$('#question').fadeOut();
+		$('#question').fadeOut(function() {
+			$('#question').html(question);
+			$('#answer1').html(answer1);
+			$('#answer2').html(answer2);
+			$('#answer3').html(answer3);
+			$('#question').fadeIn();
+			$('#answer1').fadeIn();
+			$('#answer2').fadeIn();
+			$('#answer3').fadeIn();
+		});
 		$('#answer1').fadeOut();
 		$('#answer2').fadeOut();
 		$('#answer3').fadeOut();
-		$('#question').html(question);
-		$('#answer1').html(answer1);
-		$('#answer2').html(answer2);
-		$('#answer3').html(answer3);
-		$('#question').fadeIn();
-		$('#answer1').fadeIn();
-		$('#answer2').fadeIn();
-		$('#answer3').fadeIn();
 	};
-
-	// testing purpose
-	$('#next_btn').on('click', function() {
-		reloadQuestion($scope.questions[0]);
-	});
 
 	$('#register_btn').on('click', function() {
 		$('#register').fadeOut();
 		$('#register').hide();
 		$('#preloader_div').fadeIn();
 
-		// TODO
-		$('#preloader_div').fadeOut();
-		window.onkeyup = function (e) {
-		    var key = e.keyCode ? e.keyCode : e.which;
+		reloadQuestion($scope.questions[0]);
 
-		    console.log($scope.answers);
-			if (key == 65) {
-			    $scope.answers.push({
-						timestamp: new Date(),
-						answer: 'a',
-				});
-				reloadQuestion($scope.questions[$scope.answers.length]);
-			} else if (key == 66) {
-			    $scope.answers.push({
-						timestamp: new Date(),
-						answer: 'b',
-				});
-				reloadQuestion($scope.questions[$scope.answers.length]);
-			} else if (key == 67) {
-				$scope.answers.push({
-						timestamp: new Date(),
-						answer: 'c',
-				});
-				reloadQuestion($scope.questions[$scope.answers.length]);
-			}
-		};
+		$('#preloader_div').fadeOut();
+		$('#preloader_div').hide();
+		$('#main').fadeIn();
+
+		main();
 	});
 
 	/* *************** MAIN *************** */
+	function main() {
+		window.onkeyup = function (e) {
+			var key = e.keyCode ? e.keyCode : e.which;
+
+			if (key == 65) {
+				$scope.answers.push({
+					timestamp: new Date().getTime(),
+					answer: 'a',
+				});
+			} else if (key == 66) {
+				$scope.answers.push({
+					timestamp: new Date().getTime(),
+					answer: 'b',
+				});
+			} else if (key == 67) {
+				$scope.answers.push({
+					timestamp: new Date().getTime(),
+					answer: 'c',
+				});
+			}
+
+			$scope.count += 1;
+
+			if ($scope.count == $scope.questions.length) {
+				$('#main').fadeOut();
+				$('#main').hide();
+				score();
+			} else {
+				reloadQuestion($scope.questions[$scope.count]);
+			}
+		};
+	}
 
 
 
 
 
 	/* *************** SCORE *************** */
+	function score() {
+		window.onkeyup = function() {};
+		$('#score').fadeIn();
+		$('#scoreh1').html(5);
+
+
+		$('#showscore_btn').on('click', function() {
+			$('#score').fadeOut();
+			$('#score').hide();
+			scoreboard();
+		});
+	}
 
 
 
 
-
+	/* *************** SCOREBOARD ************** */
+	function scoreboard() {
+		$('#scoreboard').fadeIn();
+	}
 	});
 }]);
 
