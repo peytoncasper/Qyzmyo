@@ -113,16 +113,14 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
                         answer: 'c',
                     });
                 }
-                if ($scope.answers.length > $scope.count) {
-                    $scope.count += 1;
+                $scope.count += 1;
 
-                    if ($scope.count == $scope.questions.length) {
-                        $('#main').fadeOut();
-                        $('#main').hide();
-                        score();
-                    } else {
-                        reloadQuestion($scope.questions[$scope.count]);
-                    }
+                if ($scope.count == $scope.questions.length) {
+                    $('#main').fadeOut();
+                    $('#main').hide();
+                    score();
+                } else {
+                    reloadQuestion($scope.questions[$scope.count]);
                 }
             };
         }
@@ -147,7 +145,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
                         })
                     },
 
-            })
+            });
 
             //var m2x = new M2X("eb4354541cb303b74ce82025fcfd5dec");
             //m2x.devices.view("0bc2215fc6d7778f080d240f0f234b76", function (device) {
