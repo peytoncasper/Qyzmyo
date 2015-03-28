@@ -239,19 +239,42 @@ app.controller('ScoreboardCtrl', ['$scope', '$rootScope', function($scope, $root
 	};
 
 	$(document).ready(function () {
+        // close nav bar if open
+        $('#sidenav-overlay').trigger('click');
+		$('.tooltipped').tooltip({delay: 50});
+
 		$('#scoreboard').fadeIn();
+		
         $.ajax({
             url: 'http://api-flow.att.io/sandbox/asl/augustuskc/in/flow/results',
             success: function (data) {
+            	var arr = [];
                 $.each(data.values, function (index, value) {
                     var userData = jQuery.parseJSON(value.value);
+                    arr.push({
+                    	userData: userData,
+                    	timestamp: value.timestamp
+                    });
+                    /*
                     $("#tablebody").append(
                     	'<tr><td>' + userData.name + 
                     	'</td><td>' + userData.score +
 						'</td><td>' + new Date(value.timestamp).toLocaleTimeString() + ' <span class="grey-text darken-2">' + new Date(value.timestamp).toLocaleDateString() + '</span>' +
 						'</td></tr>'
                 	);
-                	console.log("date", value.timestamp);
+					*/
+                });
+                arr.sort(function(a, b) {
+                	var diff = a.userData.score - b.userData.score;
+                	var ascending = true;	// set `false` for descending
+                	return ascending ? -diff : diff;
+                });
+                $.each(arr, function(index, value) {
+                    $("#tablebody").append(
+                    	'<tr><td>' + value.userData.name + 
+                    	'</td><td>' + parseInt(value.userData.score) +
+						'</td><td>' + new Date(value.timestamp).toLocaleTimeString() + ' <span class="grey-text darken-2">' + new Date(value.timestamp).toLocaleDateString() + '</span>' +
+						'</td></tr>');
                 });
 
             	$('#preloader_div').fadeOut(function() {
