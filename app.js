@@ -25,6 +25,31 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
   $(document).ready(function() {
     // close nav bar if open
     $('#sidenav-overlay').trigger('click');
+
+    $('#preloader_div').hide();
+
+    /* *************** REGISTER *************** */
+    $('#register_btn').on('click', function() {
+      $('#register').fadeOut();
+      $('#register').hide();
+      $('#preloader_div').fadeIn();
+
+      // TODO
+
+    });
+
+    /* *************** MAIN *************** */
+
+
+
+
+
+    /* *************** SCORE *************** */
+
+
+
+
+
   });
 }]);
 
