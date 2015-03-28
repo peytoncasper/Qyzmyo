@@ -32,25 +32,21 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 		    answers: ['9', '6', '3'],
             answer: 'a',
 		}, {
-		    // TODO
-		    name: '6 x 6 = ',
-		    answers: ['25', '32', '36'],
+		    name: 'Which is the only real dev language',
+		    answers: ['Whitespace', 'L0Lcode', 'Node.js'],
             answer: 'c'
 		}, {
-		    // TODO
-		    name: '7 x 7 = ',
-		    answers: ['25', '23', '49'],
-            answer: 'c'
-		}, {
-		    // TODO
-		    name: '8 x 8 = ',
-		    answers: ['56', '32', '64'],
-            answer: 'c'
-		}, {
-		    // TODO
-		    name: '9 x 9 = ',
-		    answers: ['45', '81', '10'],
+		    name: 'Mac > PC',
+		    answers: ['Hell yes', 'Nope.js', 'Maybe'],
             answer: 'b'
+		}, {
+		    name: 'How many programmers does it take to fix a projector',
+		    answers: ['None.js', 'One', 'It\'s a hardware problem'],
+            answer: 'c'
+		}, {
+		    name: 'How many Prolog programmers does it take to fix a printer',
+		    answers: ['Yes', 'No', '10'],
+            answer: 'a'
 		}
     ];
     $scope.count = 0;
