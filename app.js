@@ -238,20 +238,49 @@ app.controller('ScoreboardCtrl', ['$scope', '$rootScope', function($scope, $root
 		title: 'Scoreboard'
 	};
 
+	$('#sortName').on('click', function() {
+	    $scope.arr.sort(function(a, b) {
+	    	var diff = a.userData.name > b.userData.name;
+	    	var ascending = true;	// set `false` for descending
+	    	return ascending ? !diff : diff;
+	    });
+	    populateTable();
+	});
+
+	$('#sortScore').on('click', function() {
+	    $scope.arr.sort(function(a, b) {
+	    	var diff = a.userData.score - b.userData.score;
+	    	var ascending = true;	// set `false` for descending
+	    	return ascending ? -diff : diff;
+	    });
+	    populateTable();
+	});
+
+	var populateTable = function() {
+		$('#tablebody').html('');
+        $.each($scope.arr, function(index, value) {
+            $("#tablebody").append(
+            	'<tr><td>' + value.userData.name + 
+            	'</td><td>' + parseInt(value.userData.score) +
+				'</td><td>' + new Date(value.timestamp).toLocaleTimeString() + ' <span class="grey-text darken-2">' + new Date(value.timestamp).toLocaleDateString() + '</span>' +
+				'</td></tr>');
+        });
+	};
+
 	$(document).ready(function () {
         // close nav bar if open
         $('#sidenav-overlay').trigger('click');
 		$('.tooltipped').tooltip({delay: 50});
 
 		$('#scoreboard').fadeIn();
-		
+
         $.ajax({
             url: 'http://api-flow.att.io/sandbox/asl/augustuskc/in/flow/results',
             success: function (data) {
-            	var arr = [];
+            	$scope.arr = [];
                 $.each(data.values, function (index, value) {
                     var userData = jQuery.parseJSON(value.value);
-                    arr.push({
+                    $scope.arr.push({
                     	userData: userData,
                     	timestamp: value.timestamp
                     });
@@ -264,18 +293,7 @@ app.controller('ScoreboardCtrl', ['$scope', '$rootScope', function($scope, $root
                 	);
 					*/
                 });
-                arr.sort(function(a, b) {
-                	var diff = a.userData.score - b.userData.score;
-                	var ascending = true;	// set `false` for descending
-                	return ascending ? -diff : diff;
-                });
-                $.each(arr, function(index, value) {
-                    $("#tablebody").append(
-                    	'<tr><td>' + value.userData.name + 
-                    	'</td><td>' + parseInt(value.userData.score) +
-						'</td><td>' + new Date(value.timestamp).toLocaleTimeString() + ' <span class="grey-text darken-2">' + new Date(value.timestamp).toLocaleDateString() + '</span>' +
-						'</td></tr>');
-                });
+                populateTable($scope.arr);
 
             	$('#preloader_div').fadeOut(function() {
             		$('#scoreboard').fadeIn();
