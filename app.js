@@ -32,30 +32,26 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 		    answers: ['9', '6', '3'],
             answer: 'a',
 		}, {
-		    // TODO
-		    name: '6 x 6 = ',
-		    answers: ['25', '32', '36'],
+		    name: 'Which is the only real dev language',
+		    answers: ['Whitespace', 'L0Lcode', 'Node.js'],
             answer: 'c'
 		}, {
-		    // TODO
-		    name: '7 x 7 = ',
-		    answers: ['25', '23', '49'],
-            answer: 'c'
-		}, {
-		    // TODO
-		    name: '8 x 8 = ',
-		    answers: ['56', '32', '64'],
-            answer: 'c'
-		}, {
-		    // TODO
-		    name: '9 x 9 = ',
-		    answers: ['45', '81', '10'],
+		    name: 'Mac > PC',
+		    answers: ['Hell yes', 'Nope.js', 'Maybe'],
             answer: 'b'
+		}, {
+		    name: 'How many programmers does it take to fix a projector',
+		    answers: ['None.js', 'One', 'It\'s a hardware problem'],
+            answer: 'c'
+		}, {
+		    name: 'How many Prolog programmers does it take to fix a printer',
+		    answers: ['Yes', 'No', '10'],
+            answer: 'a'
 		}
     ];
     $scope.count = 0;
     $scope.answers = [];
-    $scope.timeout = 5 * 1000;  // 5 secs per question
+    $scope.base_score = 100;
 
     $(document).ready(function () {
         // close nav bar if open
@@ -226,7 +222,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
                 if($scope.questions[i].answer == $scope.answers[i].answer)
                 {
                     var elapsedTime = Math.abs($scope.answers[i].timestamp - $scope.answers[i - 1].timestamp)/1000.0;
-                    $scope.score += 100.0 /elapsedTime;
+                    $scope.score += $scope.base_score;
+                    $scope.score += $scope.base_score /elapsedTime; // bonus for timing
 
                 }
             }
@@ -241,21 +238,62 @@ app.controller('ScoreboardCtrl', ['$scope', '$rootScope', function($scope, $root
 		title: 'Scoreboard'
 	};
 
+	$('#sortName').on('click', function() {
+	    $scope.arr.sort(function(a, b) {
+	    	var diff = a.userData.name > b.userData.name;
+	    	var ascending = true;	// set `false` for descending
+	    	return ascending ? !diff : diff;
+	    });
+	    populateTable();
+	});
+
+	$('#sortScore').on('click', function() {
+	    $scope.arr.sort(function(a, b) {
+	    	var diff = a.userData.score - b.userData.score;
+	    	var ascending = true;	// set `false` for descending
+	    	return ascending ? -diff : diff;
+	    });
+	    populateTable();
+	});
+
+	var populateTable = function() {
+		$('#tablebody').html('');
+        $.each($scope.arr, function(index, value) {
+            $("#tablebody").append(
+            	'<tr><td>' + value.userData.name + 
+            	'</td><td>' + parseInt(value.userData.score) +
+				'</td><td>' + new Date(value.timestamp).toLocaleTimeString() + ' <span class="grey-text darken-2">' + new Date(value.timestamp).toLocaleDateString() + '</span>' +
+				'</td></tr>');
+        });
+	};
+
 	$(document).ready(function () {
+        // close nav bar if open
+        $('#sidenav-overlay').trigger('click');
+		$('.tooltipped').tooltip({delay: 50});
+
 		$('#scoreboard').fadeIn();
+
         $.ajax({
             url: 'http://api-flow.att.io/sandbox/asl/augustuskc/in/flow/results',
             success: function (data) {
+            	$scope.arr = [];
                 $.each(data.values, function (index, value) {
                     var userData = jQuery.parseJSON(value.value);
+                    $scope.arr.push({
+                    	userData: userData,
+                    	timestamp: value.timestamp
+                    });
+                    /*
                     $("#tablebody").append(
                     	'<tr><td>' + userData.name + 
                     	'</td><td>' + userData.score +
 						'</td><td>' + new Date(value.timestamp).toLocaleTimeString() + ' <span class="grey-text darken-2">' + new Date(value.timestamp).toLocaleDateString() + '</span>' +
 						'</td></tr>'
                 	);
-                	console.log("date", value.timestamp);
+					*/
                 });
+                populateTable($scope.arr);
 
             	$('#preloader_div').fadeOut(function() {
             		$('#scoreboard').fadeIn();
