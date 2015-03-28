@@ -22,6 +22,15 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
     title: 'Home'
   };
 
+  $scope.questions = [
+    {
+      name: '3 x 3 = ',
+      answers: ['3', '6', '9']
+    }, {
+      // TODO
+    }
+  ];
+
   $(document).ready(function() {
     // close nav bar if open
     $('#sidenav-overlay').trigger('click');
