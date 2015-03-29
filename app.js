@@ -32,7 +32,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function ($scop
 		    answers: ['9', '6', '3'],
             answer: 'a',
 		}, {
-		    name: 'Which is the only real dev language',
+		    name: 'Which is the "only real dev language"',
 		    answers: ['Whitespace', 'L0Lcode', 'Node.js'],
             answer: 'c'
 		}, {
